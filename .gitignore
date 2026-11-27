@@ -1,0 +1,16 @@
+# Your real config may hold network details — keep it out of git
+config.yaml
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+
+# Local diagnostic captures
+*.jsonl

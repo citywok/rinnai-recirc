@@ -1,0 +1,12 @@
+[Unit]
+Description=Rinnai recirculation controller
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=%h/.local/bin/rinnai-recirc run --config %h/.config/rinnai-recirc/config.yaml
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,46 @@
+# rinnai-recirc configuration
+# Copy to config.yaml (or ~/.config/rinnai-recirc/config.yaml) and edit.
+# Every key is optional — anything you leave out uses the default shown here.
+
+heater:
+  # "auto" finds the heater's Wi-Fi module on your local network at startup.
+  # To pin it, use the address printed by `rinnai-recirc discover`.
+  host: auto
+  port: 9798
+
+trigger:
+  # multi  = react to burner/priority pushes from the module (no hardware needed)
+  # stream = burner pushes only
+  mode: multi
+
+recirculation:
+  # How long each recirculation phase runs (module floor is 5 minutes).
+  minutes: 30
+  # If the remaining window drops below this while a phase is active, top it up.
+  renew_below_s: 120
+
+debounce:
+  # After any recirculation window ends, no new trigger for this many seconds
+  # (0 = no dead time; every new draw triggers).
+  cooldown_s: 180
+  # Hard cap on triggers per hour (0 = unlimited).
+  max_per_hour: 12
+  # How often the heater's pump state is re-read (seconds). Two consecutive
+  # "stopped" reads are required before a trigger is allowed — single glitches
+  # are ignored.
+  state_poll_s: 2.0
+
+advanced:
+  # Write the enable command on a side socket without waiting for the echo
+  # (saves ~200 ms on the trigger path). Keep true unless debugging.
+  fire_and_forget: true
+  # Log every push line the module sends (DEBUG-grade evidence; very chatty).
+  log_all_pushes: false
+  loop_s: 0.02
+  log_level: INFO
+
+  discovery:
+    # Subnet to scan when heater.host is "auto" ("auto" = the local /24).
+    cidr: auto
+    timeout_s: 0.5
+    workers: 64
